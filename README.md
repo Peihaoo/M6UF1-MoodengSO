@@ -1,5 +1,5 @@
 # Creación de un sistema operativo con Cosmos  
-**En este repositorio podrás ver y aprender cómo puedes crear tu propio sistema operativo usando Cosmos, entre otras aplicaciónes.**  
+**En este repositorio podrás ver y aprender cómo crear tu propio sistema operativo utilizando Cosmos, entre otras aplicaciónes.**  
 ## Índice
 1. Preparación del Entorno
  - 1.1 Instalación de los elementos necesarios
