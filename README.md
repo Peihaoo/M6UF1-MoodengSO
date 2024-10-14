@@ -56,7 +56,7 @@ Finalmente, descargaremos VMware Workstation Pro 17.6.0. Programa que usaremos p
 
 En caso de que nos salte un error al final de la instalación del programa, podemos intentar varias soluciones.  
 #### 1.4.2.1 Primera solución  
-La primera medida que podemos probar és simplemente ejecutar el instalador como administrador y seguir el mismo proceso.  
+La primera medida que podemos probar es simplemente ejecutar el instalador como administrador y seguir el mismo proceso.  
 #### 1.4.2.2 Segunda solución
 En caso de que el problema persista, abriremos una consola de Windows como administradores y ejecutaremos la siguiente línea de código:
 ```
