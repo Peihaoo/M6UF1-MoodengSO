@@ -4,17 +4,40 @@ using System.ComponentModel.Design;
 using System.Text;
 using Sys = Cosmos.System;
 using Cosmos.System.Keyboard;
-
 namespace CosmosKernel1
 {
     public class Kernel : Sys.Kernel
     {
+        Sys.FileSystem.CosmosVFS fs = new Cosmos.System.FileSystem.CosmosVFS();
 
         protected override void BeforeRun()
         {
+            Sys.FileSystem.VFS.VFSManager.RegisterVFS(fs);
             Sys.KeyboardManager.SetKeyLayout(new Sys.ScanMaps.ESStandardLayout());
             Console.WriteLine("Bienvenido a Moodeng");
 
+        }
+        protected static void reconocimientoComandos(string input){
+            if (input == "help")
+            {
+                help();
+            }
+            else if (input == "about")
+            {
+                about();
+            }
+            else if (input == "shutdown")
+            {
+                shutdown();
+            }
+            else if (input == "restart" || input == "reboot")
+            {
+                reboot();
+            }
+            else
+            {
+                Console.WriteLine("Comando desconocido.");
+            }
         }
         protected static void help()
         {
@@ -46,25 +69,7 @@ namespace CosmosKernel1
             string input = "";
             Console.WriteLine("Escriba \"help\" para recibir una guía de comandos.");
             input = Console.ReadLine();
-            if (input == "help")
-            {
-                help();
-            }
-            else if (input == "about")
-            {
-                about();
-            }
-            else if (input == "shutdown")
-            {
-                shutdown();
-            }
-            else if (input == "restart" || input == "reboot")
-            {
-                reboot();
-            }
-            else{
-                Console.WriteLine("Comando desconocido.");
-            }
+            reconocimientoComandos(input);
         }
     }
 }
