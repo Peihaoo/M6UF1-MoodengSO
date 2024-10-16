@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Text;
 using Sys = Cosmos.System;
+using Cosmos.System.Keyboard;
 
 namespace CosmosKernel1
 {
@@ -11,6 +12,7 @@ namespace CosmosKernel1
 
         protected override void BeforeRun()
         {
+            Sys.KeyboardManager.SetKeyLayout(new Sys.ScanMaps.ESStandardLayout());
             Console.WriteLine("Bienvenido a Moodeng");
 
         }
@@ -56,9 +58,12 @@ namespace CosmosKernel1
             {
                 shutdown();
             }
-            else if (input == "restart"|| input == "reboot")
+            else if (input == "restart" || input == "reboot")
             {
                 reboot();
+            }
+            else{
+                Console.WriteLine("Comando desconocido.");
             }
         }
     }
