@@ -18,6 +18,28 @@ namespace CosmosKernel1
             dibujaMoodeng();
             Console.WriteLine("Escriba \"help\" para recibir una guía de comandos.");
         }
+        protected static void dibujaMoodeng() {
+            Console.WriteLine("                     .^.,*.");
+            Console.WriteLine("                    (   )  )");
+            Console.WriteLine("                   .~       \"-._   _.-'-*'-*'-*'-*'-'-.--._");
+            Console.WriteLine("                 /'             `\"'                        `.");
+            Console.WriteLine("               _/'                                           `.");
+            Console.WriteLine("          __,\"\"                                                ).--.");
+            Console.WriteLine("       .-'       `._.'                                          .--.\\");
+            Console.WriteLine("      '                                                         )   \\`:");
+            Console.WriteLine("     ;                                                          ;    \"");
+            Console.WriteLine("    :                                                           )");
+            Console.WriteLine("    | 8                                                        ;");
+            Console.WriteLine("     =                  )                                     .");
+            Console.WriteLine("      \\                .                                    .'");
+            Console.WriteLine("       `.            ~  \\                                .-'");
+            Console.WriteLine("         `-._ _ _ . '    `.          ._        _        |");
+            Console.WriteLine("                           |        /  `\"-*--*' |       |");
+            Console.WriteLine("                           |        |           |       :");
+            Console.WriteLine(" ~~~~~~~---   ~-~-~-~   -~-~-~-~-~-~~~~~~  ~~~~  ~-~-~-~-~-~-~-");
+            Console.WriteLine("------~~~~~~~~~----------~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~");
+            Console.WriteLine(" ~~~~~~~~~   ~~~~~~~~~       ~~~~~~~   ~~~~~~~~~  ~~~~~~~~~~~~~~~\r\n ");
+        }
         protected static void reconocimientoComandos(string input){
             if (input == "help")
             {
@@ -44,6 +66,7 @@ namespace CosmosKernel1
                 Console.WriteLine("Comando desconocido.");
             }
         }
+
         protected static void help()
         {
             Console.WriteLine("help\t\t-Muestra guía de comandos.");
@@ -70,28 +93,6 @@ namespace CosmosKernel1
         protected static void reboot()
         {
             Cosmos.System.Power.Reboot();
-        }
-        protected static void dibujaMoodeng() {
-            Console.WriteLine("                     .^.,*.");
-            Console.WriteLine("                    (   )  )");
-            Console.WriteLine("                   .~       \"-._   _.-'-*'-*'-*'-*'-'-.--._");
-            Console.WriteLine("                 /'             `\"'                        `.");
-            Console.WriteLine("               _/'                                           `.");
-            Console.WriteLine("          __,\"\"                                                ).--.");
-            Console.WriteLine("       .-'       `._.'                                          .--.\\");
-            Console.WriteLine("      '                                                         )   \\`:");
-            Console.WriteLine("     ;                                                          ;    \"");
-            Console.WriteLine("    :                                                           )");
-            Console.WriteLine("    | 8                                                        ;");
-            Console.WriteLine("     =                  )                                     .");
-            Console.WriteLine("      \\                .                                    .'");
-            Console.WriteLine("       `.            ~  \\                                .-'");
-            Console.WriteLine("         `-._ _ _ . '    `.          ._        _        |");
-            Console.WriteLine("                           |        /  `\"-*--*' |       |  mb");
-            Console.WriteLine("                           |        |           |       :");
-            Console.WriteLine(" ~~~~~~~---   ~-~-~-~   -~-~-~-~-~-~~~~~~  ~~~~  ~-~-~-~-~-~-~-");
-            Console.WriteLine("------~~~~~~~~~----------~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~");
-            Console.WriteLine(" ~~~~~~~~~   ~~~~~~~~~       ~~~~~~~   ~~~~~~~~~  ~~~~~~~~~~~~~~~\r\n ");
         }
         protected override void Run()
         {
