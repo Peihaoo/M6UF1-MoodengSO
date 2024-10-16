@@ -14,8 +14,9 @@ namespace CosmosKernel1
         {
             Sys.FileSystem.VFS.VFSManager.RegisterVFS(fs);
             Sys.KeyboardManager.SetKeyLayout(new Sys.ScanMaps.ESStandardLayout());
-            Console.WriteLine("Bienvenido a Moodeng");
-
+            Console.WriteLine("Bienvenido al sistema operativo MOODENG.\n");
+            dibujaMoodeng();
+            Console.WriteLine("Escriba \"help\" para recibir una guía de comandos.");
         }
         protected static void reconocimientoComandos(string input){
             if (input == "help")
@@ -34,8 +35,12 @@ namespace CosmosKernel1
             {
                 reboot();
             }
-            else
+            else if (input == "clear" || input == "cls") 
             {
+                Console.Clear();
+            }
+            else
+                    {
                 Console.WriteLine("Comando desconocido.");
             }
         }
@@ -46,6 +51,8 @@ namespace CosmosKernel1
             Console.WriteLine("\nshutdown\t\t-Apaga el sistema.");
             Console.WriteLine("\nreboot\t\t-Reinicia el sistema.");
             Console.WriteLine("restart\t\t-Reinicia el sistema.");
+            Console.WriteLine("clear\t\t-Limpia la consola.");
+            Console.WriteLine("cls\t\t-Limpia la consola.");
         }
         protected static void about()
         {
@@ -64,10 +71,31 @@ namespace CosmosKernel1
         {
             Cosmos.System.Power.Reboot();
         }
+        protected static void dibujaMoodeng() {
+            Console.WriteLine("                     .^.,*.");
+            Console.WriteLine("                    (   )  )");
+            Console.WriteLine("                   .~       \"-._   _.-'-*'-*'-*'-*'-'-.--._");
+            Console.WriteLine("                 /'             `\"'                        `.");
+            Console.WriteLine("               _/'                                           `.");
+            Console.WriteLine("          __,\"\"                                                ).--.");
+            Console.WriteLine("       .-'       `._.'                                          .--.\\");
+            Console.WriteLine("      '                                                         )   \\`:");
+            Console.WriteLine("     ;                                                          ;    \"");
+            Console.WriteLine("    :                                                           )");
+            Console.WriteLine("    | 8                                                        ;");
+            Console.WriteLine("     =                  )                                     .");
+            Console.WriteLine("      \\                .                                    .'");
+            Console.WriteLine("       `.            ~  \\                                .-'");
+            Console.WriteLine("         `-._ _ _ . '    `.          ._        _        |");
+            Console.WriteLine("                           |        /  `\"-*--*' |       |  mb");
+            Console.WriteLine("                           |        |           |       :");
+            Console.WriteLine(" ~~~~~~~---   ~-~-~-~   -~-~-~-~-~-~~~~~~  ~~~~  ~-~-~-~-~-~-~-");
+            Console.WriteLine("------~~~~~~~~~----------~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~");
+            Console.WriteLine(" ~~~~~~~~~   ~~~~~~~~~       ~~~~~~~   ~~~~~~~~~  ~~~~~~~~~~~~~~~\r\n ");
+        }
         protected override void Run()
         {
             string input = "";
-            Console.WriteLine("Escriba \"help\" para recibir una guía de comandos.");
             input = Console.ReadLine();
             reconocimientoComandos(input);
         }
