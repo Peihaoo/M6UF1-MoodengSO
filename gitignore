@@ -1,0 +1,45 @@
+# Sistema operativo
+.DS_Store                 # macOS
+Thumbs.db                # Windows
+ehthumbs.db              # Windows
+Icon?
+Desktop.ini              # Windows
+
+# Archivos de configuración
+*.swp                    # Archivos swap de Vim
+*.swo                    # Archivos swap de Vim
+*.sublime-workspace      # Archivos de Sublime Text
+*.sublime-project        # Archivos de proyecto de Sublime Text
+
+# Archivos de compilación
+*.o                      # Archivos objeto
+*.out                    # Ejecutables
+*.exe                    # Ejecutables en Windows
+*.class                  # Archivos de clase Java
+*.pyc                    # Archivos compilados de Python
+*.pdb                    # Archivos de depuración de Windows
+*.log                    # Archivos de log
+
+# Directorios de dependencias
+node_modules/            # Dependencias de Node.js
+vendor/                  # Dependencias de Composer (PHP)
+
+# Sistema de construcción
+build/                   # Directorio de compilación
+dist/                    # Directorio de distribución
+
+# Archivos de entorno
+.env                     # Archivos de configuración de entorno
+*.env                    # Archivos de configuración de entorno
+
+# Archivos de configuración de IDE
+.idea/                   # Configuración de IntelliJ IDEA
+.vscode/                 # Configuración de Visual Studio Code
+
+# Archivos temporales
+*~                       # Archivos temporales de editores
+*.tmp                    # Archivos temporales
+*.temp                   # Archivos temporales
+
+# Otros
+*.bak                    # Archivos de copia de seguridad
