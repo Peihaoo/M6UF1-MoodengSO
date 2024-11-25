@@ -5,6 +5,9 @@ using System.Text;
 using Sys = Cosmos.System;
 using Cosmos.System.Keyboard;
 using System.IO;
+using Cosmos.System.FileSystem;
+using Microsoft.VisualBasic;
+
 namespace CosmosKernel1
 {
     public class Kernel : Sys.Kernel
@@ -19,7 +22,8 @@ namespace CosmosKernel1
             dibujaMoodeng();
             Console.WriteLine("Escriba \"help\" para recibir una guía de comandos.");
         }
-        protected static void dibujaMoodeng() {
+        protected static void dibujaMoodeng()
+        {
             Console.WriteLine("                     .^.,*.");
             Console.WriteLine("                    (   )  )");
             Console.WriteLine("                   .~       \"-._   _.-'-*'-*'-*'-*'-'-.--._");
@@ -63,6 +67,10 @@ namespace CosmosKernel1
             Console.WriteLine("mv archivo.txt path\t\t-Mueve un archivo.");
             Console.WriteLine("rd archivo.txt\t-Visualiza los contenidos de un archivo.");
             Console.WriteLine("rdB archivo.txt\t-Lee todos los bytes de un archivo.");
+            Console.WriteLine("\nsum num1 num2\t -Devuelve la suma de los dos numeros");
+            Console.WriteLine("sub num1 num2\t -Devuelve la resta de los dos numeros");
+            Console.WriteLine("mult num1 num2\t -Devuelve la multiplicacion entre los dos numeros");
+            Console.WriteLine("div num1 num2\t -Devuelve la division entre los dos numeros");
         }
         protected static void about()
         {
@@ -78,7 +86,7 @@ namespace CosmosKernel1
             int espacioFormated = espacio;
             Console.WriteLine("Espacio libre: ");
             //Si podemos pasar a MB
-            if (espacio/1000 >= 1)   
+            if (espacio / 1000 >= 1)
             {
                 espacioFormated = (espacio / 1000);
                 //Si podemos pasar a GB
@@ -118,21 +126,21 @@ namespace CosmosKernel1
         {
             Cosmos.System.Power.Reboot();
         }
-        protected static void fileList(String [] files)
+        protected static void fileList(String[] files)
         {
             foreach (var file in files)
             {
                 Console.WriteLine(file);
             }
         }
-        protected static void dirList(String [] dirs)
+        protected static void dirList(String[] dirs)
         {
             foreach (var directory in dirs)
             {
                 Console.WriteLine(directory);
             }
         }
-        protected static void ls(String [] dirs)
+        protected static void ls(String[] dirs)
         {
             try
             {
@@ -150,22 +158,35 @@ namespace CosmosKernel1
                 Console.WriteLine(e.ToString());
             }
         }
-        protected static void makeFile()
+        protected static void makeFile(string nombre)
         {
+            var currentDir = Directory.GetCurrentDirectory();
+            string path = currentDir + "\\" + nombre;
             try
             {
-                var file_stream = File.Create(@"0:\testing.txt");
+                var file_stream = File.Create(path);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
             }
         }
-        protected static void makeDirectory()
+        protected static void makeDirectory(string nombre)
         {
+            var sobreescribir = "";
+            var currentDir = Directory.GetCurrentDirectory();
             try
             {
-                Directory.CreateDirectory(@"0:\testdirectory\");
+                if (File.Exists(nombre))
+                {
+                    Console.WriteLine("Ya existe el directorio " + nombre + ", quieres sobreescribirlo? (Y/N)");
+                    sobreescribir = Console.ReadLine();
+                    if (sobreescribir == "Y" || sobreescribir == "y")
+                    {
+                        removeDirectory(nombre);
+                    }
+                }
+                Directory.CreateDirectory(currentDir + "\\" + nombre);
             }
             catch (Exception e)
             {
@@ -174,9 +195,10 @@ namespace CosmosKernel1
         }
         protected static void removeDirectory(string nombreDir)
         {
+            var currentDir = Directory.GetCurrentDirectory();
             try
             {
-                Directory.Delete(@nombreDir);
+                Directory.Delete(currentDir + "\\" + nombreDir);
             }
             catch (Exception e)
             {
@@ -185,20 +207,10 @@ namespace CosmosKernel1
         }
         protected static void removeFile(string nombreFile)
         {
+            var currentDir = Directory.GetCurrentDirectory();
             try
             {
-                File.Delete(@nombreFile);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-        }
-        protected static void writeFile(string nombreArchivo)
-        {
-            try
-            {
-                File.WriteAllText(@"0:\testing.txt", "Learning how to use VFS!");
+                File.Delete(currentDir + "\\ + nombreFile");
             }
             catch (Exception e)
             {
@@ -207,32 +219,38 @@ namespace CosmosKernel1
         }
         protected static void nano(string nombre, string texto)
         {
+            var currentDir = Directory.GetCurrentDirectory();
+            string path = currentDir + "\\" + nombre;
             try
             {
-                File.WriteAllText(@nombre, texto);
+                File.WriteAllText(path, texto);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
             }
         }
-        protected static void moveFile(string nombre, string newPath)
+        protected static void moveFile(string nombre, string destination)
         {
+            var currentDir = Directory.GetCurrentDirectory();
+            string sourcePath = currentDir + "\\" + nombre;
+            string destinationPath = currentDir + "\\" + destination;
+
             try
             {
-                File.Copy(nombre, newPath);
-                File.Delete(nombre);
+                File.Copy(sourcePath, destinationPath);
+                File.Delete(sourcePath);
             }
             catch (Exception e)
             {
-                Console.WriteLine("error");
+                Console.WriteLine(e);
             }
         }
         protected static void readFile(string nombre)
         {
             try
             {
-                Console.WriteLine(File.ReadAllText(@nombre));
+                Console.WriteLine(File.ReadAllText(nombre));
             }
             catch (Exception e)
             {
@@ -250,109 +268,89 @@ namespace CosmosKernel1
                 Console.WriteLine(e.ToString());
             }
         }
+        protected static float sumar (float num1, float num2)
+        {
+            return num1+num2;
+        }
+        protected static float restar (float num1, float num2)
+        {
+            return num1 - num2;
+        }
+        protected static float multiplicar(float num1, float num2)
+        {
+            return num1 * num2;
+        }
+        protected static void dividir(float num1, float num2)
+        {
+            if (num2 == 0) Console.Write("No se puede dividir entre 0.\n");
+            else Console.Write((num1/num2).ToString("0.00"));
+        }
         protected override void Run()
         {
             string input = "";
             input = Console.ReadLine();
-            if (input == "help")
+            string[] comandParts = input.Split(' ');
+
+            switch (comandParts[0].ToLower())
             {
-                help();
-            }
-            else if (input == "about")
-            {
-                about();
-            }
-            else if (input == "shutdown")
-            {
-                shutdown();
-            }
-            else if (input == "restart" || input == "reboot")
-            {
-                reboot();
-            }
-            else if (input == "clear" || input == "cls")
-            {
-                Console.Clear();
-            }
-            else if (input == "diskspace")
-            {
-                var available_space = fs.GetAvailableFreeSpace(@"0:\");
-                espaiLliure((int)available_space);
-            }
-            else if (input == "disktype")
-            {
-                var fs_type = fs.GetFileSystemType(@"0:\");
-                Console.WriteLine("Tipo de sistema de archivos: " + fs_type);
-            }
-            else if (input == "filelist")
-            {
-                var files_list = Directory.GetFiles(@"0:\");
-                fileList(files_list);
-            }
-            else if (input == "dirlist")
-            {
-                var files_list = Directory.GetFiles(@"0:\");
-                var directory_list = Directory.GetDirectories(@"0:\");
-                fileList(files_list);
-                dirList(directory_list);
-            }
-            else if (input == "ls")
-            {
-                var directory_list = Directory.GetFiles(@"0:\");
-                ls(directory_list);
-            }
-            else if (input == "touch")
-            {
-                makeFile();
-            }
-            else if (input == "mkdir")
-            {
-                makeDirectory();
-            }
-            else if (input.Contains("rm") == true)
-            {
-                string[] words = input.Split(' ');
-                if (input.Contains("rmdir") == true)
-                {
-                    removeDirectory(words[1]);
-                }
-                else
-                {
-                    removeFile(words[1]);
-                }
-            }
-            else if (input.Contains("nano") == true)
-            {
-                string[] words = input.Split('"');
-                if (words[2] == " ")
-                {
-                    nano(words[0], words[3]);
-                }
-                else
-                {
-                    Console.WriteLine("Formato incorrecto.");
-                }
-            }
-            else if (input.Contains("mv") == true)
-            {
-                string[] words = input.Split(' ');
-                moveFile(words[0], words[1]);
-            }
-            else if (input.Contains("rd") == true)
-            {
-                string[] words = input.Split(' ');
-                if (input.Contains("rdB"))
-                {
-                    readAllBytes(words[1]);
-                }
-                else
-                {
-                    readFile(words[1]);
-                }
-            }
-            else
-            {
-                Console.WriteLine("Comando desconocido.");
+                case "help": help(); break;
+                case "about": about(); break;
+                case "shutdown": shutdown(); break;
+                case "restart": reboot(); break;
+                case "reboot": reboot(); break;
+                case "clear": Console.Clear(); break;
+                case "cls": Console.Clear(); break;
+                case "diskspace":
+                    var available_space = fs.GetAvailableFreeSpace(@"0:\");
+                    espaiLliure((int)available_space);
+                    break;
+                case "filelist":
+                    var files_list = Directory.GetFiles(@"0:\");
+                    fileList(files_list);
+                    break;
+                case "dirlist":
+                    files_list = Directory.GetFiles(@"0:\");
+                    var directory_list = Directory.GetDirectories(@"0:\");
+                    fileList(files_list);
+                    dirList(directory_list);
+                    break;
+                case "ls":
+                    directory_list = Directory.GetFiles(@"0:\");
+                    ls(directory_list);
+                    break;
+                case "touch":
+                    makeFile(comandParts[1]);
+                    break;
+                case "mkdir":
+                    makeDirectory(comandParts[1]);
+                    break;
+                case "rm": removeFile(comandParts[1]); break;
+                case "rmdir": removeDirectory(comandParts[1]); break;
+                case "nano":
+                    string[] split = input.Split('"');
+                    if (split[2] == " ")
+                    {
+                        nano(split[1], comandParts[3]);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Formato incorrecto.");
+                    }
+                    break;
+                case "mv": moveFile(comandParts[1], comandParts[2]); break;
+                case "rd": readFile(comandParts[1]); break;
+                case "rdB": readAllBytes(comandParts[1]); break;
+                case "sum": Console.WriteLine("Resultado: " + sumar(float.Parse(comandParts[1]),float.Parse(comandParts[2])).ToString("0.00")); break;
+                case "sub": Console.WriteLine("Resultado: " + restar(float.Parse(comandParts[1]),float.Parse(comandParts[2])).ToString("0.00")); break;
+                case "mult": Console.Write("Resultado: " + multiplicar(float.Parse(comandParts[1]), float.Parse(comandParts[2])).ToString("0.00")); break;
+                case "div": 
+                    Console.WriteLine("Resultado: "); 
+                    dividir(float.Parse(comandParts[1]), float.Parse(comandParts[2]));
+                    break;
+
+                default:
+                    Console.WriteLine("Comando desconocido.");
+                    break;
             }
         }
     }
